@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // .tool_response.filePath' | { read -r f; case \"$f\" in *.py) ;; *) exit 0;; esac; command -v uvx >/dev/null 2>&1 || exit 0; uvx ruff check \"$f\"; }"
+          }
+        ]
+      }
+    ]
+  }
+}
